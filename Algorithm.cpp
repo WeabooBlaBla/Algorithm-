@@ -68,3 +68,42 @@ void swap(int &a, int &b)
   a = b;
   b = temp;
 }
+
+void mergeSort(int array[], int left, int right) //recursion
+{
+  if(left<right)
+  {
+    int mid = (left+right) / 2;
+    //divine
+    mergeSort(array,left, mid); 
+    mergeSort(array,mid+1, right);
+    //conquer
+    merge(array, left, mid, right);
+  }
+}
+void merge(int array[], int subLeft, int mid, int subRight)
+{
+  int *sortedArray, sortedArraySize = right-left+1;
+  sortedArray = new(nothrow) int[sortedArraySize];
+  int sortedLeft = subLeft, sortedRight = mid+1, sortedIndex =0;
+
+  while(sortedLeft <= mid && sortedRight <=subRight)
+  {
+    if(array[subLeft] <= array[subRight])
+    {
+      sortedArray[sortedIndex++] = array[sortedLeft++];
+    }
+    else
+    {
+      sortedArray[sortedIndex++] = array[sortedRight++];
+    }
+  }
+  while(sortedLeft<=mid) sortedArray[sortedIndex++] = array[subLeft++];
+  while(sortedRight<= subRight) sortedArray[sortedIndex++] = array[subRight];
+
+  for(int i=0; i < sortedArraySize; i++)
+  {
+    array[subLeft+i] = sortedArray[i];
+  }
+
+}
