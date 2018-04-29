@@ -135,7 +135,6 @@ void merge(int array[], int subLeft, int mid, int subRight)
   {
   //  cout << sortedRight << '\n';
     sortedArray[sortedIndex++] = array[sortedRight++];
-
   }
   for(int i=0; i < sortedArraySize; i++)
   {
