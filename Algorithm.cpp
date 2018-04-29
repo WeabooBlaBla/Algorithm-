@@ -28,20 +28,21 @@ void quickSort(int array[], int mid, int size);
 
 void radixSort(string aBigNumber);
 
-void printArray(int array[], int size);
+void printArray(int array[], int from, int to);
 int main() {
     int array[] = {3,5,1,2,7,22,10,3};
-
-    mergeSort(array,0,8);
-    printArray(array,8);
+    cout << "default array: " ;
+    printArray(array,0,8);
+    mergeSort(array,0,7);
+    printArray(array,0,8);
 
     return 0;
 }
 
-void printArray(int array[], int size)
+void printArray(int array[], int from, int to)
 {
   cout<<"{\t";
-  for(int i=0; i<size;i++){
+  for(int i=from; i<to;i++){
     cout<< array[i] << "\t";
   }
     cout << "}" << endl;
@@ -97,9 +98,11 @@ void mergeSort(int array[], int left, int right) //recursion
   if(left<right)
   {
     int mid = (left+right) / 2;
+
     //divine
     mergeSort(array,left, mid);
     mergeSort(array,mid+1, right);
+
     //conquer
     merge(array, left, mid, right);
   }
@@ -108,26 +111,36 @@ void merge(int array[], int subLeft, int mid, int subRight)
 {
   int *sortedArray;
   int sortedArraySize = subRight-subLeft+1;
+  //cout<<sortedArraySize<<endl;
   sortedArray = new(nothrow) int[sortedArraySize];
   int sortedLeft = subLeft, sortedRight = mid+1, sortedIndex =0;
 
   while(sortedLeft <= mid && sortedRight <=subRight)
   {
-    if(array[subLeft] <= array[subRight])
+    if(array[sortedLeft] <= array[sortedRight])
     {
+      cout << array[sortedLeft] <<"<="<< array[sortedRight] << '\n';
       sortedArray[sortedIndex++] = array[sortedLeft++];
     }
     else
     {
+      cout << array[sortedRight] <<"<="<<  array[sortedLeft]<< '\n';
       sortedArray[sortedIndex++] = array[sortedRight++];
     }
   }
-  while(sortedLeft<=mid) sortedArray[sortedIndex++] = array[subLeft++];
-  while(sortedRight<= subRight) sortedArray[sortedIndex++] = array[subRight];
 
+  while(sortedLeft<=mid) sortedArray[sortedIndex++] = array[sortedLeft++];
+
+  while(sortedRight<= subRight)
+  {
+  //  cout << sortedRight << '\n';
+    sortedArray[sortedIndex++] = array[sortedRight++];
+
+  }
   for(int i=0; i < sortedArraySize; i++)
   {
     array[subLeft+i] = sortedArray[i];
   }
-
+  printArray(array, subLeft, sortedRight);
+  cout  << '\n';
 }
