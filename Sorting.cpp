@@ -25,6 +25,7 @@ void mergeSort(int array[], int mid, int size);
 void merge(int array[], int subLeft, int mid, int subRight);
 
 void quickSort(int array[], int mid, int size);
+int partition(int array[], int left, int right);
 
 void radixSort(string aBigNumber);
 
@@ -142,4 +143,27 @@ void merge(int array[], int subLeft, int mid, int subRight)
   }
   printArray(array, subLeft, sortedRight);
   cout  << '\n';
+}
+void quickSort(int array[], int left, int right){
+  if(left<right){
+    int pivotIndex = partition(array,left,right);
+
+    quickSort(array,left,pivotIndex);
+    quickSort(array,pivotIndex+1,right);
+  }
+}
+
+int partition(int array[], int left, int right){
+  int pivot = array[left]; //set the pivot to be the first in subArray;
+  int pivotIndex  = left;
+  for(int i = pivotIndex + 1; i<right; i++)
+  {
+    if(array[i]<pivot){
+      swap(array[i],array[++pivotIndex]);
+    }
+  }
+  swap(array[left],array[pivotIndex]);
+  printArray(array,left,right);
+  cout  << '\n';
+  return pivotIndex;
 }
