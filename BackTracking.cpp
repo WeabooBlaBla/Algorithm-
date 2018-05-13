@@ -17,10 +17,25 @@ int main() {
 
 bool nQueen(int **board, int column, int boardSize)
 {
-  if(column >= boardSize) return true; //s
+  if(column >= boardSize) return true;
+
   else
   {
+    for (int row = 0; row < boardSize; row++ ) {// find a safe position for the queen at currentColumn
+      /* code */
+      if(isSafe(board,row,column,boardSize))//pick a safe position for current queen
+      {
+        board[row][column] = 1;
 
+        if(nQueen(board,column+1,boardSize)) // go to next column, if false here mean not safe pos ava in the next col
+          return true;
+
+        //backtrack to current and delete current queen and find another pos
+        board[row][column] = 0; 
+      }
+    }
+
+    return false; //inform that there is no safe position in current column, backtrack
   }
 }
 
@@ -70,7 +85,7 @@ bool isSafe(int **board, int currentRow, int currentColumn, int boardSize)
       }
 
     }
-    
+
     return true;
   }
 }
